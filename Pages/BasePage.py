@@ -4,18 +4,13 @@ import selenium
 
 class BasePage:
     def __init__(self, browser, user):
-        self.browser = browser
+        self.browser = browser  # type: selenium.webdriver.chrome.webdriver.WebDriver
         self.user = user
 
-        const = Constant()
-        self.url = const.url
-        self.locator = const.locator
+        self.C = Constant()
 
     def quit(self):
         self.browser.quit()
-
-    def turn_off_cookies_notification(self):
-        pass
 
     def retry_click(self, locator):
         clicked = False
@@ -32,3 +27,7 @@ class BasePage:
 
     def refresh(self):
         self.browser.refresh()
+
+    def get_text(self, locator):
+        by, value = locator
+        return self.browser.find_element(by, value).text

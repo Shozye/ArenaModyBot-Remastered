@@ -17,6 +17,7 @@ class Controler:
         logging.basicConfig(filename=os.path.join(log_dir, log_name),
                             level=logging.INFO,
                             format='%(asctime)s:%(levelname)s:%(message)s')
+        logging.info('Bot has started, user profile is ' + self.user.profile_name)
 
         self.browser = webdriver.Chrome(self.driver_path)
         self.browser.implicitly_wait(30)
@@ -27,4 +28,5 @@ class Controler:
         bot = BaseBot(self.browser, self.user)
         bot.login()
         assert bot.is_in_game(), 'Bot has not logged successfully'
-        logging.info('Login_test was a success')
+        logging.info('Login_test was a success!')
+        bot.quit()
