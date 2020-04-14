@@ -4,3 +4,4 @@ venv
 *.json
 .idea
 addonSelenium.py
+UserConfig.py
