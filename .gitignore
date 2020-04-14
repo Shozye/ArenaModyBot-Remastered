@@ -1,5 +1,6 @@
 venv
 *.log
 *.csv
+*.json
 .idea
 addonSelenium.py

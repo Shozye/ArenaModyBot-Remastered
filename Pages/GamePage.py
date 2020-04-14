@@ -16,27 +16,31 @@ class GamePage(BasePage):
             return False
 
     def my_money(self):
-        return self.get_text(self.C.locator['dollars'])
+        return int(self.get_text(self.C.locator['dollars']).replace(',', ''))
 
     def my_level(self):
-        return self.get_text(self.C.locator['level'])
+        return int(self.get_text(self.C.locator['level']))
 
     def my_energy(self):
-        return self.get_text(self.C.locator['energy'])
+        return int(self.get_text(self.C.locator['energy']))
 
     def my_emeralds(self):
-        return self.get_text(self.C.locator['emeralds'])
+        return int(self.get_text(self.C.locator['emeralds']).replace(',', ''))
 
     def show_my_stats(self):
         self.retry_click(self.C.locator['popularity-button'])
+        WebDriverWait(self.browser, 5).until(
+            EC.visibility_of_element_located(self.C.locator['my-loyalty'])
+        )
 
     def my_stats(self):
-        stats = {'style': self.get_text(self.C.locator['my-style']),
-                 'generosity': self.get_text(self.C.locator['my-generosity']),
-                 'creativity': self.get_text(self.C.locator['my-creativity']),
-                 'beauty': self.get_text(self.C.locator['my-beauty']),
-                 'loyalty': self.get_text(self.C.locator['my-loyalty']),
-                 'devotion': self.get_text(self.C.locator['my-devotion'])}
+        # debug
+        stats = {'style': int(self.get_text(self.C.locator['my-style'])),
+                 'generosity': int(self.get_text(self.C.locator['my-generosity'])),
+                 'creativity': int(self.get_text(self.C.locator['my-creativity'])),
+                 'beauty': int(self.get_text(self.C.locator['my-beauty'])),
+                 'loyalty': int(self.get_text(self.C.locator['my-loyalty'])),
+                 'devotion': int(self.get_text(self.C.locator['my-devotion']))}
         return stats
 
     def is_during_photo_session(self):

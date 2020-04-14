@@ -18,7 +18,7 @@ class StartPage(BasePage):
             pass
 
     def go_to(self):
-        self.browser.get(self.C.url['StartPage'])
+        self.browser.get(self.C.url['start-page'])
         pass
 
     def open_login_form(self):

@@ -1,5 +1,10 @@
 from Pages.StartPage import StartPage
 from Pages.GamePage import GamePage
+from Pages.BasePage import BasePage
+from enemies.Enemy import Enemy
+from Constant import Constant
+import csv
+import os
 
 
 class BaseBot:
@@ -11,6 +16,29 @@ class BaseBot:
         self.emeralds = None
         self.energy = None
         self.level = None
+        self.enemies = self.initialize_enemies()
+
+    def initialize_enemies(self):
+        enemies = dict()
+        file_path = 'enemies/' + self.user.profile_name + '-enemies.csv'
+        if os.path.isfile(file_path):
+            with open(file_path, 'r') as csvfile:
+                enemies_reader = csv.reader(csvfile)
+                next(enemies_reader)
+                for row in enemies_reader:
+                    # row[0], row[1], row[2], row[3] = id, last_attack_time, am_attacks, sum_prizes
+                    enemies[row[0]] = Enemy(row[0], row[1], row[2], row[3])
+        return enemies
+
+    def save_enemies(self):
+        enemies = self.enemies.values()
+        enemies = [[x.id, x.last_attack_time, x.am_attacks, x.sum_prizes] for x in enemies]
+        file_path = 'enemies/' + self.user.profile_name + '-enemies.csv'
+        with open(file_path, 'w+', newline='') as csvfile:
+            enemies_writer = csv.writer(csvfile)
+            enemies_writer.writerow(["ID", "last_attack_time", "am_attacks", "sum_prizes"])
+            enemies_writer.writerows(enemies)
+        pass
 
     def login(self):
         start_page = StartPage(self.browser, self.user)
@@ -19,11 +47,15 @@ class BaseBot:
         start_page.type_username()
         start_page.type_password()
         start_page.submit_login()
+        start_page.refresh()
 
     def is_in_game(self):
         game_page = GamePage(self.browser, self.user)
         return game_page.is_at()
 
+    def refresh(self):
+        base_page = BasePage(self.browser, self.user)
+        base_page.refresh()
     def get_stats(self):
         game_page = GamePage(self.browser, self.user)
         game_page.show_my_stats()

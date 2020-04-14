@@ -14,7 +14,8 @@ class Constant:
             'enemy-clothes': (By.CSS_SELECTOR, 'div.rightLadyContent div div img'),
             'challenge-button': (By.ID, 'challengeLady'),
             # EnemyPage
-            'club-name': (By.CSS_SELECTOR, '.user-guild li a'),
+            'overview': (By.CLASS_NAME, 'overview'),
+            'club-name': (By.CLASS_NAME, 'div.user-guild div.rightRow a'),
             'enemy-level': (By.CLASS_NAME, 'level'),
             'enemy-style': (By.CSS_SELECTOR, 'div.style div.value'),
             'enemy-creativity': (By.CSS_SELECTOR, 'div.creativity div.value'),
@@ -62,17 +63,19 @@ class Constant:
             # RankPage
             'ranking': 'https://g.arenamody.pl/ranking.php',
             # StartPage
-            'StartPage': 'https://arenamody.pl'
+            'start-page': 'https://arenamody.pl',
             # WorkPage
+            'work-page': 'https://g.arenamody.pl/jobs.php'
         }
         return url
 
     def init_script(self):
         script = {
             # RankPage
-            'change-to-exp': "getRanking(currentType, 'exp'); return false;",
-            'change-to-won-duels': "getRanking(currentType, 'duels_won'); return false;",
-            'change-to-won-dollars': "getRanking(currentType, 'duels_money_won'); return false;",
+            'change-rank-won-duels-begin': "getRanking('daily','duels_won',",
+            'change-rank-exp-begin': "getRanking('daily','exp',",
+            'change-rank-won-dollars-begin': "getRanking('daily','duels_money_won',",
+            'change-rank-end': ')',
             # WorkPage
             'open-inventory': "ftvJobBoosters(1)",
             'close-popup': "closePopup(1);",
