@@ -18,6 +18,7 @@ class WorkerBot(BaseBot):
         pass
 
     def choose_enemy(self):
+
         pass
 
     def make_emerald_action(self):
