@@ -7,22 +7,22 @@ class RankPage(GamePage):
         super().__init__(browser, user)
 
     def go_to(self):
-        self.browser.get(self.C.url['ranking'])
+        self.browser.get(self.Url.ranking)
 
     def change_to_exp_page(self, page_num):
-        script = self.C.script['change-rank-exp-begin'] + str(page_num) + self.C.script['change-rank-end']
+        script = self.Script.change_rank_exp_begin + str(page_num) + self.Script.change_rank_end
         self.browser.execute_script(script)
 
     def change_to_won_duels_page(self, page_num):
-        script = self.C.script['change-rank-won-duels-begin'] + str(page_num) + self.C.script['change-rank-end']
+        script = self.Script.change_rank_won_duels_begin + str(page_num) + self.Script.change_rank_end
         self.browser.execute_script(script)
 
     def change_to_won_dollars_page(self, page_num):
-        script = self.C.script['change-rank-won-dollars-begin'] + str(page_num) + self.C.script['change-rank-end']
+        script = self.Script.change_rank_won_dollars_begin + str(page_num) + self.Script.change_rank_end
         self.browser.execute_script(script)
 
     def gather_ids_from_page(self):
-        by, value = self.C.locator['player-name']
+        by, value = self.Locator.player_name
         attempt = 0
         succeed = False
         while attempt <= self.user.gather_id_try and not succeed:

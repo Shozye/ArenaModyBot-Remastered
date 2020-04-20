@@ -2,7 +2,6 @@ from Bots.BaseBot import BaseBot
 from Pages.RankPage import RankPage
 from Pages.EnemyPage import EnemyPage
 from enemies.Enemy import Enemy
-from math import floor
 import csv
 import os
 
@@ -63,16 +62,7 @@ class ProcessEnemiesBot(BaseBot):
         if not self.level - self.user.attack_enemies_with_level_max_lower_by <= enemy_page.enemy_level() <= \
                self.level + self.user.attack_enemies_with_level_max_higher_by:
             return False
-        style_better = floor(self.user.stat_multi * self.stats['style']) > enemy_page.enemy_style()
-        creativity_better = floor(self.user.stat_multi * self.stats['creativity']) > enemy_page.enemy_creativity()
-        devotion_better = floor(self.user.stat_multi * self.stats['devotion']) > enemy_page.enemy_devotion()
-        beauty_better = floor(self.user.stat_multi * self.stats['beauty']) > enemy_page.enemy_beauty()
-        generosity_better = floor(self.user.stat_multi * self.stats['generosity']) > enemy_page.enemy_generosity()
-        loyalty_better = floor(self.user.stat_multi * self.stats['loyalty']) > enemy_page.enemy_loyalty()
-        if style_better + creativity_better + devotion_better + beauty_better + generosity_better + loyalty_better >= \
-                self.user.am_of_stats_that_should_be_higher_than_enemy:
-            return True
-        return False
+        return True if self.better_than_enemy(enemy_page.enemy_stats()) else False
 
     def add_to_enemies(self, enemy_id):
         self.enemies[enemy_id] = Enemy(enemy_id)

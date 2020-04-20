@@ -3,81 +3,75 @@ from selenium.webdriver.common.by import By
 
 class Constant:
     def __init__(self):
-        self.locator = self.init_locator()
-        self.url = self.init_url()
-        self.script = self.init_script()
+        self.Locator = self.Locator()
+        self.Url = self.Url()
+        self.Script = self.Script()
 
-    def init_locator(self):
-        locator = {
+    class Locator:
+        def __init__(self):
             # BasePage
             # ChallengePage
-            'enemy-clothes': (By.CSS_SELECTOR, 'div.rightLadyContent div div img'),
-            'challenge-button': (By.ID, 'challengeLady'),
+            self.enemy_clothes = (By.CSS_SELECTOR, 'div.rightLadyContent div div img')
+            self.challenge_button = (By.ID, 'challengeLady')
             # EnemyPage
-            'overview': (By.CLASS_NAME, 'overview'),
-            'club-name': (By.CLASS_NAME, 'div.user-guild div.rightRow a'),
-            'enemy-level': (By.CLASS_NAME, 'level'),
-            'enemy-style': (By.CSS_SELECTOR, 'div.style div.value'),
-            'enemy-creativity': (By.CSS_SELECTOR, 'div.creativity div.value'),
-            'enemy-devotion': (By.CSS_SELECTOR, 'div.devotion div.value'),
-            'enemy-beauty': (By.CSS_SELECTOR, 'div.beauty div.value'),
-            'enemy-generosity': (By.CSS_SELECTOR, 'div.generosity div.value'),
-            'enemy-loyalty': (By.CSS_SELECTOR, 'div.loyalty div.value'),
+            self.overview = (By.CLASS_NAME, 'overview')
+            self.club_name = (By.CLASS_NAME, 'div.user-guild div.rightRow a')
+            self.enemy_level = (By.CLASS_NAME, 'level')
+            self.enemy_style = (By.CSS_SELECTOR, 'div.style div.value')
+            self.enemy_creativity = (By.CSS_SELECTOR, 'div.creativity div.value')
+            self.enemy_devotion = (By.CSS_SELECTOR, 'div.devotion div.value')
+            self.enemy_beauty = (By.CSS_SELECTOR, 'div.beauty div.value')
+            self.enemy_generosity = (By.CSS_SELECTOR, 'div.generosity div.value')
+            self.enemy_loyalty = (By.CSS_SELECTOR, 'div.loyalty div.value')
             # GamePage
-            'chat-button': (By.ID, 'js-chat-toggle-button'),
-            'photo-session-timer': (By.ID, 'activity-timer'),
-            'photo-session-emerald': (By.ID, 'activity-indicator-photosession'),
-            'dollars': (By.ID, 'ladyDollars'),
-            'emeralds': (By.ID, 'ladyEmerald'),
-            'level': (By.ID, 'currentLevel'),
-            'energy': (By.ID, 'ladyEnergy'),
-            'popularity-button': (By.CSS_SELECTOR, 'div.hide button.fp-button'),
-            'my-style': (By.ID, 'stat_style_all'),
-            'my-creativity': (By.ID, 'stat_creativity_all'),
-            'my-devotion': (By.ID, 'stat_devotion_all'),
-            'my-beauty': (By.ID, 'stat_beauty_all'),
-            'my-generosity': (By.ID, 'stat_generosity_all'),
-            'my-loyalty': (By.ID, 'stat_loyalty_all'),
+            self.chat_button = (By.ID, 'js-chat-toggle-button')
+            self.photo_session_timer = (By.ID, 'activity-timer')
+            self.photo_session_emerald = (By.ID, 'activity-indicator-photosession')
+            self.dollars = (By.ID, 'ladyDollars')
+            self.emeralds = (By.ID, 'ladyEmerald')
+            self.level = (By.ID, 'currentLevel')
+            self.energy = (By.ID, 'ladyEnergy')
+            self.popularity_button = (By.CSS_SELECTOR, 'div.hide button.fp-button')
+            self.my_style = (By.ID, 'stat_style_all')
+            self.my_creativity = (By.ID, 'stat_creativity_all')
+            self.my_devotion = (By.ID, 'stat_devotion_all')
+            self.my_beauty = (By.ID, 'stat_beauty_all')
+            self.my_generosity = (By.ID, 'stat_generosity_all')
+            self.my_loyalty = (By.ID, 'stat_loyalty_all')
             # RankPage
-            'turn-to-next-page-button': (By.CLASS_NAME, 'pagingRight'),
-            'player-name': (By.CLASS_NAME, 'player-name'),
+            self.turn_to_next_page_button = (By.CLASS_NAME, 'pagingRight')
+            self.player_name = (By.CLASS_NAME, 'player-name')
             # StartPage
-            'login-button': (By.ID, 'login-btn'),
-            'cookies-button': (By.CSS_SELECTOR, 'div>a.cc_btn.cc_btn_accept_all'),
-            'user-field': (By.NAME, 'login_user'),
-            'pass-field': (By.NAME, 'login_pass'),
-            'submit-login': (By.ID, 'loginSubmit'),
+            self.login_button = (By.ID, 'login-btn')
+            self.cookies_button = (By.CSS_SELECTOR, 'div>a.cc_btn.cc_btn_accept_all')
+            self.user_field = (By.NAME, 'login_user')
+            self.pass_field = (By.NAME, 'login_pass')
+            self.submit_login = (By.ID, 'loginSubmit')
             # WorkPage
-            'photo-session-chance-button': (By.CSS_SELECTOR, 'span#ftvChanceBox-1 > a'),
-            'photo-session-start-button': (By.CSS_SELECTOR, 'div#startWorkingFtvButton-1 > a'),
-        }
-        return locator
+            self.photo_session_chance_button = (By.CSS_SELECTOR, 'span#ftvChanceBox-1 > a')
+            self.photo_session_start_button = (By.CSS_SELECTOR, 'div#startWorkingFtvButton-1 > a')
 
-    def init_url(self):
-        url = {
+    class Url:
+        def __init__(self):
             # BasePage
             # ChallengePage
             # EnemyPage
-            'base-profile': 'https://g.arenamody.pl/profile.php?id=',
+            self.base_profile = 'https://g.arenamody.pl/profile.php?id='
             # GamePage
             # RankPage
-            'ranking': 'https://g.arenamody.pl/ranking.php',
+            self.ranking = 'https://g.arenamody.pl/ranking.php'
             # StartPage
-            'start-page': 'https://arenamody.pl',
+            self.start_page = 'https://arenamody.pl'
             # WorkPage
-            'work-page': 'https://g.arenamody.pl/jobs.php'
-        }
-        return url
+            self.work_page = 'https://g.arenamody.pl/jobs.php'
 
-    def init_script(self):
-        script = {
+    class Script:
+        def __init__(self):
             # RankPage
-            'change-rank-won-duels-begin': "getRanking('daily','duels_won',",
-            'change-rank-exp-begin': "getRanking('daily','exp',",
-            'change-rank-won-dollars-begin': "getRanking('daily','duels_money_won',",
-            'change-rank-end': ')',
+            self.change_rank_won_duels_begin = "getRanking('daily','duels_won',"
+            self.change_rank_exp_begin = "getRanking('daily','exp',"
+            self.change_rank_won_dollars_begin = "getRanking('daily','duels_money_won',"
+            self.change_rank_end = ')'
             # WorkPage
-            'open-inventory': "ftvJobBoosters(1)",
-            'close-popup': "closePopup(1);",
-        }
-        return script
+            self.open_inventory = "ftvJobBoosters(1)"
+            self.close_popup = "closePopup(1);"

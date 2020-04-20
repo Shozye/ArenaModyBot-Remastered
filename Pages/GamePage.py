@@ -10,43 +10,43 @@ class GamePage(BasePage):
 
     def is_at(self):
         try:
-            WebDriverWait(self.browser, 10).until(EC.element_to_be_clickable(self.C.locator['chat-button']))
+            WebDriverWait(self.browser, 10).until(EC.element_to_be_clickable(self.Locator.chat_button))
             return True
         except selenium.common.exceptions.TimeoutException:
             return False
 
     def my_money(self):
-        return int(self.get_text(self.C.locator['dollars']).replace(',', ''))
+        return int(self.get_text(self.Locator.dollars).replace(',', ''))
 
     def my_level(self):
-        return int(self.get_text(self.C.locator['level']))
+        return int(self.get_text(self.Locator.level))
 
     def my_energy(self):
-        return int(self.get_text(self.C.locator['energy']))
+        return int(self.get_text(self.Locator.energy))
 
     def my_emeralds(self):
-        return int(self.get_text(self.C.locator['emeralds']).replace(',', ''))
+        return int(self.get_text(self.Locator.emeralds).replace(',', ''))
 
     def show_my_stats(self):
-        self.retry_click(self.C.locator['popularity-button'])
+        self.retry_click(self.Locator.popularity_button)
         WebDriverWait(self.browser, 5).until(
-            EC.visibility_of_element_located(self.C.locator['my-loyalty'])
+            EC.visibility_of_element_located(self.Locator.my_loyalty)
         )
 
     def my_stats(self):
         # debug
-        stats = {'style': int(self.get_text(self.C.locator['my-style'])),
-                 'generosity': int(self.get_text(self.C.locator['my-generosity'])),
-                 'creativity': int(self.get_text(self.C.locator['my-creativity'])),
-                 'beauty': int(self.get_text(self.C.locator['my-beauty'])),
-                 'loyalty': int(self.get_text(self.C.locator['my-loyalty'])),
-                 'devotion': int(self.get_text(self.C.locator['my-devotion']))}
+        stats = {'style': int(self.get_text(self.Locator.my_style)),
+                 'generosity': int(self.get_text(self.Locator.my_generosity)),
+                 'creativity': int(self.get_text(self.Locator.my_creativity)),
+                 'beauty': int(self.get_text(self.Locator.my_beauty)),
+                 'loyalty': int(self.get_text(self.Locator.my_loyalty)),
+                 'devotion': int(self.get_text(self.Locator.my_devotion))}
         return stats
 
     def is_during_photo_session(self):
-        by, value = self.C.locator['photo-session-timer']
+        by, value = self.Locator.photo_session_timer
         return True if self.browser.find_element(by, value).is_displayed() else False
 
     def is_photo_session_to_end(self):
-        by, value = self.C.locator['photo-session-emerald']
+        by, value = self.Locator.photo_session_emerald
         return True if self.browser.find_element(by, value).is_displayed() else False

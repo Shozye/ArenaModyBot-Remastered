@@ -22,7 +22,6 @@ class Controller:
         logging.info('Bot has started, user profile is ' + self.user.profile_name)
 
         self.browser = webdriver.Chrome(self.driver_path)
-        self.browser.implicitly_wait(30)
         self.browser.maximize_window()
 
     def login_test(self):
@@ -59,11 +58,11 @@ class Controller:
         bot.login()
         bot.update_status()
         while True:
-            bot.make_emerald_action()
             if not bot.during_any_photo_session_activity():
                 while bot.energy > self.user.energy_to_attack_buffer:
                     bot.attack(bot.choose_enemy())
                     bot.update_status()
+            bot.make_emerald_action()
             pass
 
     def fight(self):

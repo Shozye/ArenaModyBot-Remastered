@@ -1,6 +1,8 @@
 from Bots.BaseBot import BaseBot
 from Pages.GamePage import GamePage
 from Pages.WorkPage import WorkPage
+from Pages.EnemyPage import EnemyPage
+import time
 
 
 class WorkerBot(BaseBot):
@@ -15,10 +17,21 @@ class WorkerBot(BaseBot):
             return False
 
     def attack(self, enemy_id):
-        pass
+        enemy_page = EnemyPage(self.browser, self.user, enemy_id)
+        enemy_page.go_to()
+        if enemy_page.enemy_club() == self.user.my_club and self.user.my_club is not None:
+            return False
+        if not self.level - self.user.attack_enemies_with_level_max_lower_by <= enemy_page.enemy_level() <= \
+               self.level + self.user.attack_enemies_with_level_max_higher_by:
+            return False
+        return True if self.better_than_enemy(enemy_page.enemy_stats()) else False
 
     def choose_enemy(self):
-
+        self.enemies.sort(key=lambda x: x.sorting_function(), reverse=True)
+        for enemy in self.enemies:
+            if enemy.next_attack_time > time.time():
+                return enemy
+        raise Exception('Every next_attack_time in enemies is in future')
         pass
 
     def make_emerald_action(self):

@@ -22,3 +22,6 @@ class UserConfig:
         self.gather_id_try = 10
         self.energy_to_attack_buffer = 8
         self.how_much_time_wait_for_photo_session_end = 1500
+        self.additional_worth_of_second_attack = 500
+        self.worth_of_first_attack = 1500
+        self.additional_worth_of_third_attack = 250

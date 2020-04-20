@@ -7,7 +7,9 @@ class BasePage:
         self.browser = browser  # type: selenium.webdriver.chrome.webdriver.WebDriver
         self.user = user
 
-        self.C = Constant()
+        self.Locator = Constant().Locator
+        self.Url = Constant().Url
+        self.Script = Constant().Script
 
     def quit(self):
         self.browser.quit()

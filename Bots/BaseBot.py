@@ -2,7 +2,7 @@ from Pages.StartPage import StartPage
 from Pages.GamePage import GamePage
 from Pages.BasePage import BasePage
 from enemies.Enemy import Enemy
-from Constant import Constant
+from math import floor
 import csv
 import os
 
@@ -85,3 +85,16 @@ class BaseBot:
 
     def quit(self):
         self.browser.quit()
+
+    def better_than_enemy(self, enemy_stats):
+        style_better = floor(self.user.stat_multi * self.stats['style']) > enemy_stats['style']
+        creativity_better = floor(self.user.stat_multi * self.stats['creativity']) > enemy_stats['creativity']
+        devotion_better = floor(self.user.stat_multi * self.stats['devotion']) > enemy_stats['devotion']
+        beauty_better = floor(self.user.stat_multi * self.stats['beauty']) > enemy_stats['beauty']
+        generosity_better = floor(self.user.stat_multi * self.stats['generosity']) > enemy_stats['generosity']
+        loyalty_better = floor(self.user.stat_multi * self.stats['loyalty']) > enemy_stats['loyalty']
+        if style_better + creativity_better + devotion_better + beauty_better + generosity_better + loyalty_better >= \
+                self.user.am_of_stats_that_should_be_higher_than_enemy:
+            return True
+        else:
+            return False

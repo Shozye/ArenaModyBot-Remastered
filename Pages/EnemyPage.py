@@ -8,15 +8,15 @@ class EnemyPage(GamePage):
     def __init__(self, browser, user, _id):
         super().__init__(browser, user)
         self.id = _id
-        self.enemy_url = self.C.url['base-profile'] + _id
+        self.enemy_url = self.Url.base_profile + _id
 
     def go_to(self):
         self.browser.get(self.enemy_url)
 
     def enemy_club(self):
         self.browser.implicitly_wait(0)
-        WebDriverWait(self.browser, 5).until(EC.visibility_of_element_located(self.C.locator['overview']))
-        by, value = self.C.locator['club-name']
+        WebDriverWait(self.browser, 5).until(EC.visibility_of_element_located(self.Locator.overview))
+        by, value = self.Locator.club_name
         try:
             club_name = self.browser.find_element(by, value).text
         except selenium.common.exceptions.NoSuchElementException:
@@ -25,39 +25,50 @@ class EnemyPage(GamePage):
         return club_name
 
     def enemy_level(self):
-        return int(self.get_text(self.C.locator['enemy-level']).split(' ')[1])
+        return int(self.get_text(self.Locator.enemy_level).split(' ')[1])
 
     def enemy_style(self):
-        return int(self.get_text(self.C.locator['enemy-style']))
+        return int(self.get_text(self.Locator.enemy_style))
 
     def enemy_creativity(self):
-        return int(self.get_text(self.C.locator['enemy-creativity']))
+        return int(self.get_text(self.Locator.enemy_creativity))
 
     def enemy_devotion(self):
-        return int(self.get_text(self.C.locator['enemy-devotion']))
+        return int(self.get_text(self.Locator.enemy_devotion))
 
     def enemy_beauty(self):
-        return int(self.get_text(self.C.locator['enemy-beauty']))
+        return int(self.get_text(self.Locator.enemy_beauty))
 
     def enemy_generosity(self):
-        return int(self.get_text(self.C.locator['enemy-generosity']))
+        return int(self.get_text(self.Locator.enemy_generosity))
 
     def enemy_loyalty(self):
-        return int(self.get_text(self.C.locator['enemy-loyalty']))
+        return int(self.get_text(self.Locator.enemy_loyalty))
+
+    def enemy_stats(self):
+        stats = {
+            "style": self.enemy_style(),
+            "devotion": self.enemy_devotion(),
+            "beauty": self.enemy_beauty(),
+            "generosity": self.enemy_generosity(),
+            "loyalty": self.enemy_loyalty(),
+            "creativity": self.enemy_creativity()
+        }
+        return stats
 
     def challenge_button_exist(self):
-        by, value = self.C.locator['challenge-button']
+        by, value = self.Locator.challenge_button
         if len(self.browser.find_elements(by, value)) == 0:
             return False
         return True
         pass
 
     def challenge(self):
-        self.retry_click(self.C.locator['challenge-button'])
+        self.retry_click(self.Locator.challenge_button)
         pass
 
     def has_boosters(self):
-        by, value = self.C.locator['booster-indicator']
+        by, value = self.Locator.booster_indicator
         if len(self.browser.find_elements(by, value)) == 0:
             return False
         return True
