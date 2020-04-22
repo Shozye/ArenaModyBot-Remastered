@@ -12,6 +12,7 @@ class ProcessEnemiesBot(BaseBot):
         self.potential_enemies = list()
         self.checked_enemies_file_path = 'enemies/' + self.user.profile_name + '-checked-enemies.csv'
         self.checked_enemies = self.initialize_checked_enemies()
+        self.am_new_enemies = 0
 
     def initialize_checked_enemies(self):
         checked_enemies = list()
@@ -66,6 +67,8 @@ class ProcessEnemiesBot(BaseBot):
 
     def add_to_enemies(self, enemy_id):
         self.enemies[enemy_id] = Enemy(enemy_id)
+        self.logger.info('{} added to enemies'.format(enemy_id))
+        self.am_new_enemies += 1
         self.save_enemies()
 
     def add_to_checked_enemies(self, enemy_id):
@@ -81,9 +84,11 @@ class ProcessEnemiesBot(BaseBot):
     def check_checked_enemies(self):
         for enemy_id in self.checked_enemies:
             if self.should_add_to_enemies(enemy_id):
+                self.logger.debug('Adding to enemies {}'.format(enemy_id))
                 self.add_to_enemies(enemy_id)
 
     def check_enemies(self):
         for enemy_id in self.enemies:
             if not self.should_add_to_enemies(enemy_id):
+                self.logger.debug('Deleting from enemies {}'.format(enemy_id))
                 del self.enemies[enemy_id]

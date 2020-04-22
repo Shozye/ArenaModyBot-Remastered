@@ -36,6 +36,7 @@ class Controller:
         bot.get_potential_enemies()
         bot.sift_potential_enemies()
         bot.check_potential_enemies()
+        self.logger.info('Added {} new enemies to enemy list'.format(bot.am_new_enemies))
 
     def gather_emeralds(self):
         self.logger.info('gather_emeralds method executed')

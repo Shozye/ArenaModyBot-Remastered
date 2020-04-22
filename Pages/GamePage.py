@@ -22,7 +22,9 @@ class GamePage(BasePage):
         return int(self.get_text(self.Locator.level))
 
     def my_energy(self):
-        return int(self.get_text(self.Locator.energy))
+        energy = int(self.get_text(self.Locator.energy))
+        self.logger.debug('My energy is '.format(energy))
+        return energy
 
     def my_emeralds(self):
         return int(self.get_text(self.Locator.emeralds).replace(',', ''))

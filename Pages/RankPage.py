@@ -12,14 +12,17 @@ class RankPage(GamePage):
     def change_to_exp_page(self, page_num):
         script = self.Script.change_rank_exp_begin + str(page_num) + self.Script.change_rank_end
         self.browser.execute_script(script)
+        self.logger('Changed to experience page {}'.format(page_num))
 
     def change_to_won_duels_page(self, page_num):
         script = self.Script.change_rank_won_duels_begin + str(page_num) + self.Script.change_rank_end
         self.browser.execute_script(script)
+        self.logger('Changed to won duels page {}'.format(page_num))
 
     def change_to_won_dollars_page(self, page_num):
         script = self.Script.change_rank_won_dollars_begin + str(page_num) + self.Script.change_rank_end
         self.browser.execute_script(script)
+        self.logger('Changed to won dollars page {}'.format(page_num))
 
     def gather_ids_from_page(self):
         by, value = self.Locator.player_name
@@ -35,5 +38,6 @@ class RankPage(GamePage):
             attempt += 1
         if not succeed:
             raise Exception('Gather ids from page failed due to too many StaleElementReferenceException')
-        ids = set(map(lambda x: x.split('=')[1], hrefs))
-        return ids
+        ids = list(map(lambda x: x.split('=')[1], hrefs))
+        self.logger.debug('Ids found: ' + ' '.join(ids))
+        return set(ids)

@@ -8,6 +8,7 @@ import time
 class WorkerBot(BaseBot):
     def __init__(self, browser, user):
         super().__init__(browser, user)
+        self.gathered_emeralds = 0
 
     def during_any_photo_session_activity(self):
         game_page = GamePage(self.browser, self.user)
@@ -27,9 +28,10 @@ class WorkerBot(BaseBot):
         return True if self.better_than_enemy(enemy_page.enemy_stats()) else False
 
     def choose_enemy(self):
-        self.enemies.sort(key=lambda x: x.sorting_function(), reverse=True)
+        self.enemies.sort(key=lambda x: x.worth(), reverse=True)
         for enemy in self.enemies:
             if enemy.next_attack_time > time.time():
+                self.logger.debug('Enemy chosen to be attacked is {}'.format(enemy.id))
                 return enemy
         raise Exception('Every next_attack_time in enemies is in future')
         pass
@@ -40,7 +42,12 @@ class WorkerBot(BaseBot):
         if work_page.is_during_photo_session():
             work_page.wait_until_photo_session_to_end()
         elif work_page.is_photo_session_to_end():
+            emeralds_before = work_page.my_emeralds()
             work_page.end_photo_session()
             work_page.close_photo_session_popup()
+            emeralds_after = work_page.my_emeralds()
+            change = emeralds_after - emeralds_before
+            self.logger.info('Amount of gathered emeralds {}. Thats {} in total'.format(change, self.gathered_emeralds))
+
         else:
             work_page.start_photo_session()

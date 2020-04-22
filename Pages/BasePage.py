@@ -1,11 +1,12 @@
 from Constant import Constant
 import selenium
-
+import logging
 
 class BasePage:
     def __init__(self, browser, user):
         self.browser = browser  # type: selenium.webdriver.chrome.webdriver.WebDriver
         self.user = user
+        self.logger = logging.getLogger('main')
 
         self.Locator = Constant().Locator
         self.Url = Constant().Url
@@ -25,6 +26,7 @@ class BasePage:
             except selenium.common.exceptions.StaleElementReferenceException:
                 pass
         if not clicked:
+            self.logger.debug('retry_click not working at value: {}'.format(str(value)))
             raise Exception('StaleElementReferenceException occurred and even 50 clicks didnt fix it')
 
     def refresh(self):

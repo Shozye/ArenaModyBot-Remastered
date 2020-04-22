@@ -10,15 +10,19 @@ class WorkPage(GamePage):
 
     def go_to(self):
         self.browser.get(self.Url.work_page)
+        self.logger.debug('Browser is at work page')
 
     def start_photo_session(self):
         self.retry_click(self.Locator.photo_session_start_button)
+        self.logger.debug('Photo session started')
 
     def end_photo_session(self):
         self.retry_click(self.Locator.photo_session_chance_button)
+        self.logger.debug('Photo session ended')
 
     def close_photo_session_popup(self):
         self.browser.execute_script(self.Script.close_popup)
+        self.logger.debug('Photo session closed popup')
 
     def open_inventory(self):
         self.browser.execute_script(self.Script.open_inventory)

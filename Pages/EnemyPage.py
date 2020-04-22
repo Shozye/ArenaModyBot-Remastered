@@ -12,6 +12,7 @@ class EnemyPage(GamePage):
 
     def go_to(self):
         self.browser.get(self.enemy_url)
+        self.logger.debug('Entered {}'.format(self.enemy_url))
 
     def enemy_club(self):
         self.browser.implicitly_wait(0)
@@ -19,8 +20,10 @@ class EnemyPage(GamePage):
         by, value = self.Locator.club_name
         try:
             club_name = self.browser.find_element(by, value).text
+            self.logger.debug('Enemy club was {}'.format(club_name))
         except selenium.common.exceptions.NoSuchElementException:
             club_name = None
+            self.logger.debug('Enemy wasnt in any club')
         self.browser.implicitly_wait(30)
         return club_name
 
@@ -61,15 +64,13 @@ class EnemyPage(GamePage):
         if len(self.browser.find_elements(by, value)) == 0:
             return False
         return True
-        pass
 
     def challenge(self):
         self.retry_click(self.Locator.challenge_button)
-        pass
+        self.logger.debug('Challenged lady with ID {}'.format(self.id))
 
     def has_boosters(self):
         by, value = self.Locator.booster_indicator
         if len(self.browser.find_elements(by, value)) == 0:
             return False
         return True
-        pass
