@@ -25,7 +25,7 @@ class StartPage(BasePage):
         self.retry_click(self.Locator.login_button)
         try:
             WebDriverWait(self.browser, 5).until(
-                EC.element_to_be_clickable((self.Locator.submit_login))
+                EC.element_to_be_clickable(self.Locator.submit_login)
             )
         except selenium.common.exceptions.TimeoutException:
             self.retry_click(self.Locator.login_button)
