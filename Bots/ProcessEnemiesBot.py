@@ -58,12 +58,7 @@ class ProcessEnemiesBot(BaseBot):
     def should_add_to_enemies(self, enemy_id):
         enemy_page = EnemyPage(self.browser, self.user, enemy_id)
         enemy_page.go_to()
-        if enemy_page.enemy_club() == self.user.my_club and self.user.my_club is not None:
-            return False
-        if not self.level - self.user.attack_enemies_with_level_max_lower_by <= enemy_page.enemy_level() <= \
-               self.level + self.user.attack_enemies_with_level_max_higher_by:
-            return False
-        return True if self.better_than_enemy(enemy_page.enemy_stats()) else False
+        return self.should_attack()
 
     def add_to_enemies(self, enemy_id):
         self.enemies[enemy_id] = Enemy(enemy_id)

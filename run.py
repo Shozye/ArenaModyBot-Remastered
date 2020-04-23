@@ -12,9 +12,9 @@ def main():
 
     # control_panel.login_test()
     # control_panel.find_enemies()
-    # control_panel.gather_emeralds()
+    control_panel.gather_emeralds()
     # control_panel.gather_emeralds_and_fight()
     # control_panel.fight()
-    control_panel.test_logger()
+    # control_panel.test_logger()
 if __name__ == '__main__':
     main()

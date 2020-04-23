@@ -1,4 +1,5 @@
 from Pages.GamePage import GamePage
+from Pages.ChallengePage import ChallengePage
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import selenium
@@ -68,6 +69,7 @@ class EnemyPage(GamePage):
     def challenge(self):
         self.retry_click(self.Locator.challenge_button)
         self.logger.debug('Challenged lady with ID {}'.format(self.id))
+        return ChallengePage(self.browser, self.user)
 
     def has_boosters(self):
         by, value = self.Locator.booster_indicator

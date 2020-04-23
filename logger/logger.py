@@ -28,3 +28,13 @@ def config_logging():
 
     logger.addHandler(fh1)
     logger.addHandler(fh2)
+
+    sub_logger = logging.getLogger('worthy people')
+    sub_logger.setLevel(logging.INFO)
+
+    form2 = logging.Formatter('%(asctime)s|%(message)s')
+    fh3 = logging.FileHandler('logs/WorthyLadies.log')
+    fh3.setLevel(logging.INFO)
+    fh3.setFormatter(form2)
+
+    sub_logger.addHandler(fh3)

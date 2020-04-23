@@ -84,21 +84,21 @@ class BaseBot:
         self.update_emeralds()
         self.update_energy()
         self.update_level()
-        self.logger.debug('Succesfully updated status. money {}, emeralds {}, energy {}, level {}').format(self.money,
-                                                                                                           self.emeralds,
-                                                                                                           self.energy,
-                                                                                                           self.level)
+        self.logger.debug('Succesfully updated status')
+        self.logger.debug('money {}, emeralds {}, energy {}, level {}'.format(self.money, self.emeralds,
+                                                                              self.energy, self.level))
 
     def quit(self):
         self.browser.quit()
 
-    def better_than_enemy(self, enemy_stats):
-        style_better = floor(self.user.stat_multi * self.stats['style']) > enemy_stats['style']
-        creativ_better = floor(self.user.stat_multi * self.stats['creativity']) > enemy_stats['creativity']
-        devotion_better = floor(self.user.stat_multi * self.stats['devotion']) > enemy_stats['devotion']
-        beauty_better = floor(self.user.stat_multi * self.stats['beauty']) > enemy_stats['beauty']
-        generosity_better = floor(self.user.stat_multi * self.stats['generosity']) > enemy_stats['generosity']
-        loyalty_better = floor(self.user.stat_multi * self.stats['loyalty']) > enemy_stats['loyalty']
+    def better_than_enemy(self, enemy_stats, has_booster):
+        multi = self.user.multi_booster if has_booster else 1
+        style_better = floor(self.user.stat_multi * self.stats['style']) > enemy_stats['style'] * multi
+        creativ_better = floor(self.user.stat_multi * self.stats['creativity']) > enemy_stats['creativity'] * multi
+        devotion_better = floor(self.user.stat_multi * self.stats['devotion']) > enemy_stats['devotion'] * multi
+        beauty_better = floor(self.user.stat_multi * self.stats['beauty']) > enemy_stats['beauty'] * multi
+        generosity_better = floor(self.user.stat_multi * self.stats['generosity']) > enemy_stats['generosity'] * multi
+        loyalty_better = floor(self.user.stat_multi * self.stats['loyalty']) > enemy_stats['loyalty'] * multi
 
         am_better = style_better + creativ_better + devotion_better + beauty_better + generosity_better + loyalty_better
         self.logger.debug('Amount of better stats {}'.format(am_better))
@@ -106,3 +106,12 @@ class BaseBot:
             return True
         else:
             return False
+
+    def should_attack(self, enemy_page):
+        if enemy_page.enemy_club() == self.user.my_club and self.user.my_club is not None or \
+                not self.level - self.user.attack_enemies_with_level_max_lower_by <= enemy_page.enemy_level() <= \
+                    self.level + self.user.attack_enemies_with_level_max_higher_by or \
+                not self.better_than_enemy(enemy_page.enemy_stats(), enemy_page.has_boosters()):
+            return False
+        else:
+            return True

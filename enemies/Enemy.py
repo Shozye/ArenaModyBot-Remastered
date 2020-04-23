@@ -1,4 +1,6 @@
 from UserConfig import UserConfig
+
+
 class Enemy:
     def __init__(self, enemy_id, next_attack_time=0, am_attacks=0, sum_prizes=0, last_attack_prize=0):
         self.id = enemy_id
@@ -20,3 +22,28 @@ class Enemy:
         if self.am_attacks == 2:
             worth += self.user.additional_worth_of_third_attack
         return worth
+
+    def update_after_no_challenge_button(self):
+        self.next_attack_time += self.user.delay_after_no_challenge_button
+
+    def update_after_fight(self, prize):
+        self.am_attacks += 1
+        self.sum_prizes += prize
+        self.last_attack_prize = prize
+        if prize < 0 and self.user.should_give_huge_delay_after_lost_fight:  # lost fight
+            self.next_attack_time += self.user.huge_delay
+        elif prize < 0:
+            self.next_attack_time += self.user.normal_attack_delay
+        elif prize <= self.user.first_money_won_threshold_after_attack:
+            self.next_attack_time += self.user.first_time_threshold_delay
+        elif prize <= self.user.second_money_won_threshold_after_attack:
+            self.next_attack_time += self.user.second_time_threshold_delay
+        elif prize <= self.user.third_money_won_threshold_after_attack:
+            self.next_attack_time += self.user.third_time_threshold_delay
+        elif prize <= self.user.forth_money_won_threshold_after_attack:
+            self.next_attack_time += self.user.forth_time_threshold_delay
+        else:
+            self.next_attack_time += self.user.normal_attack_delay
+
+    def update_enemy_attacked_before_or_attacked_5_times(self):
+        self.next_attack_time += self.user.delay_enemy_attacked_before_or_5_times

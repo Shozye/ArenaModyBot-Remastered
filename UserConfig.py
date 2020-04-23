@@ -1,4 +1,3 @@
-
 class UserConfig:
     def __init__(self):
         self.profile_name = 'sample_profile'
@@ -18,6 +17,7 @@ class UserConfig:
         # before comparing stats with enemy, multiply your own stats by stat_multi
         # goal is to prevent losing
         self.stat_multi = 0.95
+        self.multi_booster = 1.25
         self.am_of_stats_that_should_be_higher_than_enemy = 5
         self.gather_id_try = 10
         self.energy_to_attack_buffer = 8
@@ -25,3 +25,16 @@ class UserConfig:
         self.additional_worth_of_second_attack = 500
         self.worth_of_first_attack = 1500
         self.additional_worth_of_third_attack = 250
+        self.delay_after_no_challenge_button = 144000  # 40 hours
+        self.first_money_won_threshold_after_attack = 300  # inclusive
+        self.first_time_threshold_delay = 60 * 60 * 18
+        self.second_money_won_threshold_after_attack = 1000  # inclusive
+        self.second_time_threshold_delay = 60 * 60 * 6
+        self.third_money_won_threshold_after_attack = 1500  # inclusive
+        self.third_time_threshold_delay = 60 * 60 * 3
+        self.forth_money_won_threshold_after_attack = 0  # inclusive
+        self.forth_time_threshold_delay = 0
+        self.normal_attack_delay = 60 * 60 + 1
+        self.should_give_huge_delay_after_lost_fight = True
+        self.huge_delay = 60 * 60 * 24 * 15  # 15 days
+        self.delay_to_enemy_attacked_before_or_5_times = 60 * 60 * 1.5  # 1.5 hour
