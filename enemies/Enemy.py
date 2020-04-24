@@ -1,4 +1,5 @@
 from UserConfig import UserConfig
+import time
 
 
 class Enemy:
@@ -24,12 +25,13 @@ class Enemy:
         return worth
 
     def update_after_no_challenge_button(self):
-        self.next_attack_time += self.user.delay_after_no_challenge_button
+        self.next_attack_time = time.time() + self.user.delay_after_no_challenge_button
 
     def update_after_fight(self, prize):
         self.am_attacks += 1
         self.sum_prizes += prize
         self.last_attack_prize = prize
+        self.next_attack_time = time.time()
         if prize < 0 and self.user.should_give_huge_delay_after_lost_fight:  # lost fight
             self.next_attack_time += self.user.huge_delay
         elif prize < 0:
@@ -46,4 +48,7 @@ class Enemy:
             self.next_attack_time += self.user.normal_attack_delay
 
     def update_enemy_attacked_before_or_attacked_5_times(self):
-        self.next_attack_time += self.user.delay_enemy_attacked_before_or_5_times
+        self.next_attack_time = time.time() + self.user.delay_to_enemy_attacked_before_or_5_times
+
+    def update_enemy_shouldnt_be_attacked_not_in_range_level_or_stats(self):
+        self.next_attack_time = time.time() + self.user.delay_to_enemy_that_shouldnt_be_attacked

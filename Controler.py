@@ -20,56 +20,77 @@ class Controller:
         self.browser.maximize_window()
 
     def login_test(self):
-        self.logger.info('login_test method executed')
-        bot = BaseBot(self.browser, self.user)
-        bot.login()
-        assert bot.is_in_game(), 'Bot has not logged successfully'
-        self.logger.info('Login_test was a success!')
-        bot.quit()
+        try:
+            self.logger.info('login_test method executed')
+            bot = BaseBot(self.browser, self.user)
+            bot.login()
+            assert bot.is_in_game(), 'Bot has not logged successfully'
+            self.logger.info('Login_test was a success!')
+            bot.quit()
+        except Exception:
+            self.logger.critical('logging_test thrown exception', exc_info=True)
+            raise
 
     def find_enemies(self):
-        self.logger.info('find_enemies method executed')
-        bot = ProcessEnemiesBot(self.browser, self.user)
-        bot.login()
-        bot.get_stats()
-        bot.update_status()
-        bot.get_potential_enemies()
-        bot.sift_potential_enemies()
-        bot.check_potential_enemies()
-        self.logger.info('Added {} new enemies to enemy list'.format(bot.am_new_enemies))
+        try:
+            self.logger.info('find_enemies method executed')
+            bot = ProcessEnemiesBot(self.browser, self.user)
+            bot.login()
+            bot.get_stats()
+            bot.update_status()
+            bot.get_potential_enemies()
+            bot.sift_potential_enemies()
+            bot.check_potential_enemies()
+            self.logger.info('Added {} new enemies to enemy list'.format(bot.am_new_enemies))
+        except Exception:
+            self.logger.critical('logging_test thrown exception', exc_info=True)
+            raise
 
     def gather_emeralds(self):
-        self.logger.info('gather_emeralds method executed')
-        bot = WorkerBot(self.browser, self.user)
-        bot.login()
-        bot.update_status()
-        while True:
-            bot.make_emerald_action()
+        try:
+            self.logger.info('gather_emeralds method executed')
+            bot = WorkerBot(self.browser, self.user)
+            bot.login()
             bot.update_status()
-            pass
+            while True:
+                bot.make_emerald_action()
+                bot.update_status()
+
+        except Exception:
+            self.logger.critical('gather_emeralds thrown exception', exc_info=True)
+            raise
 
     def gather_emeralds_and_fight(self):
-        self.logger.info('gather_emeralds_and_fight method executed')
-        bot = WorkerBot(self.browser, self.user)
-        bot.login()
-        bot.update_status()
-        while True:
-            if not bot.during_any_photo_session_activity():
-                while bot.energy > self.user.energy_to_attack_buffer:
-                    bot.attack(bot.choose_enemy())
-                    bot.update_status()
-            bot.make_emerald_action()
-            pass
+        try:
+            self.logger.info('gather_emeralds_and_fight method executed')
+            bot = WorkerBot(self.browser, self.user)
+            bot.login()
+            bot.update_status()
+            bot.get_stats()
+            while True:
+                if not bot.during_any_photo_session_activity():
+                    while bot.energy > self.user.energy_to_attack_buffer:
+                        bot.attack(bot.choose_enemy())
+                        bot.update_status()
+                bot.make_emerald_action()
+                bot.update_status()
+        except Exception:
+            self.logger.critical('gathered emeralds and fight thrown exception', exc_info=True)
+            raise
 
     def fight(self):
-        self.logger.info('fight method executed')
-        bot = WorkerBot(self.browser, self.user)
-        bot.login()
-        bot.update_status()
-        if not bot.during_any_photo_session_activity():
-            while bot.energy > 0:
-                bot.attack(bot.choose_enemy())
-                bot.update_status()
+        try:
+            self.logger.info('fight method executed')
+            bot = WorkerBot(self.browser, self.user)
+            bot.login()
+            bot.update_status()
+            if not bot.during_any_photo_session_activity():
+                while bot.energy > 0:
+                    bot.attack(bot.choose_enemy())
+                    bot.update_status()
+        except Exception:
+            self.logger.critical('fight thrown exception', exc_info=True)
+            raise
 
     def test_logger(self):
         self.logger.info('info test')

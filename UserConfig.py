@@ -9,9 +9,9 @@ class UserConfig:
         self.attack_enemies_with_level_max_lower_by = 5
         self.attack_enemies_with_level_max_higher_by = 0
         self.experience_begin = 1  # inclusive
-        self.experience_end = 8  # inclusive
-        self.won_dollars_begin = 1  # inclusive
-        self.won_dollars_end = 0  # inclusive
+        self.experience_end = 30  # inclusive
+        self.won_dollars_begin = 30  # inclusive
+        self.won_dollars_end = 50  # inclusive
         self.won_duels_begin = 1  # inclusive
         self.won_duels_end = 0  # inclusive
         # before comparing stats with enemy, multiply your own stats by stat_multi
@@ -38,3 +38,4 @@ class UserConfig:
         self.should_give_huge_delay_after_lost_fight = True
         self.huge_delay = 60 * 60 * 24 * 15  # 15 days
         self.delay_to_enemy_attacked_before_or_5_times = 60 * 60 * 1.5  # 1.5 hour
+        self.delay_to_enemy_that_shouldnt_be_attacked = 60 * 60 * 24

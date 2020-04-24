@@ -16,7 +16,6 @@ class EnemyPage(GamePage):
         self.logger.debug('Entered {}'.format(self.enemy_url))
 
     def enemy_club(self):
-        self.browser.implicitly_wait(0)
         WebDriverWait(self.browser, 5).until(EC.visibility_of_element_located(self.Locator.overview))
         by, value = self.Locator.club_name
         try:
@@ -24,8 +23,7 @@ class EnemyPage(GamePage):
             self.logger.debug('Enemy club was {}'.format(club_name))
         except selenium.common.exceptions.NoSuchElementException:
             club_name = None
-            self.logger.debug('Enemy wasnt in any club')
-        self.browser.implicitly_wait(30)
+            self.logger.debug('Enemy wasn\'t in any club')
         return club_name
 
     def enemy_level(self):
@@ -61,13 +59,13 @@ class EnemyPage(GamePage):
         return stats
 
     def challenge_button_exist(self):
-        by, value = self.Locator.challenge_button
+        by, value = self.Locator.challenge_button_first
         if len(self.browser.find_elements(by, value)) == 0:
             return False
         return True
 
     def challenge(self):
-        self.retry_click(self.Locator.challenge_button)
+        self.retry_click(self.Locator.challenge_button_first)
         self.logger.debug('Challenged lady with ID {}'.format(self.id))
         return ChallengePage(self.browser, self.user)
 

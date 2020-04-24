@@ -23,7 +23,7 @@ class GamePage(BasePage):
 
     def my_energy(self):
         energy = int(self.get_text(self.Locator.energy))
-        self.logger.debug('My energy is '.format(energy))
+        self.logger.debug('My energy is {}'.format(energy))
         return energy
 
     def my_emeralds(self):
@@ -47,8 +47,20 @@ class GamePage(BasePage):
 
     def is_during_photo_session(self):
         by, value = self.Locator.photo_session_timer
-        return True if self.browser.find_element(by, value).is_displayed() else False
+        attempt = 0
+        while attempt < 50:
+            try:
+                return True if self.browser.find_element(by, value).is_displayed() else False
+            except selenium.common.exceptions.StaleElementReferenceException:
+                attempt += 1
+        raise Exception('Stale Element Reference Exception in is_during_photo_session')
 
     def is_photo_session_to_end(self):
         by, value = self.Locator.photo_session_emerald
-        return True if self.browser.find_element(by, value).is_displayed() else False
+        attempt = 0
+        while attempt < 50:
+            try:
+                return True if self.browser.find_element(by, value).is_displayed() else False
+            except selenium.common.exceptions.StaleElementReferenceException:
+                attempt += 1
+        raise Exception('Stale Element Reference Exception in is_photo_session_to_end')

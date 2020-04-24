@@ -12,9 +12,11 @@ class WorkerBot(BaseBot):
 
     def during_any_photo_session_activity(self):
         game_page = GamePage(self.browser, self.user)
-        if not game_page.is_during_photo_session() and not game_page.is_photo_session_to_end():
+        if game_page.is_during_photo_session() or game_page.is_photo_session_to_end():
+            self.logger.debug('Bot is during photo session activity')
             return True
         else:
+            self.logger.debug('Bot is NOT during photo session activity')
             return False
 
     def attack(self, enemy_id):
@@ -39,17 +41,17 @@ class WorkerBot(BaseBot):
                 self.enemies[enemy_id].update_after_no_challenge_button()
             self.save_enemies()
         else:
+            self.enemies[enemy_id].update_enemy_shouldnt_be_attacked_not_in_range_level_or_stats()
             self.logger.debug('Enemy {} shouldn\'t be attacked, skipping.'.format(enemy_id))
 
-
-
-
     def choose_enemy(self):
-        self.enemies.sort(key=lambda x: x.worth(), reverse=True)
-        for enemy in self.enemies:
-            if enemy.next_attack_time > time.time():
+        values = list(self.enemies.values())
+        values.sort(key=lambda x: x.worth(), reverse=True)
+        for enemy in values:
+            print(enemy.next_attack_time, time.time())
+            if enemy.next_attack_time < time.time():
                 self.logger.debug('Enemy chosen to be attacked is {}'.format(enemy.id))
-                return enemy
+                return enemy.id
         raise Exception('You cant attack any enemy at the moment because their next_attack_time is in future')
         pass
 
@@ -65,17 +67,6 @@ class WorkerBot(BaseBot):
             emeralds_after = work_page.my_emeralds()
             change = emeralds_after - emeralds_before
             self.logger.info('Amount of gathered emeralds {}. Thats {} in total'.format(change, self.gathered_emeralds))
-
+            self.refresh()
         else:
             work_page.start_photo_session()
-
-    def update_enemy_no_challenge_button(self, enemy_id):
-        self.enemies[enemy_id].update(next_attack_time=self.user.non_attackable_delay)
-        pass
-
-    def update_enemy(self, enemy_id, prize):
-        enemy = self.enemies[enemy_id]
-        # sum_prizes, am_attack, next_attack_time, last_attack_money
-        sum_prizes = enemy.sum_prizes + prize
-        am_attacks = enemy.am_attacks + 1
-        last_attack_money = prize

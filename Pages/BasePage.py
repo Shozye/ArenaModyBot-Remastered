@@ -2,6 +2,7 @@ from Constant import Constant
 import selenium
 import logging
 
+
 class BasePage:
     def __init__(self, browser, user):
         self.browser = browser  # type: selenium.webdriver.chrome.webdriver.WebDriver
@@ -18,15 +19,15 @@ class BasePage:
     def retry_click(self, locator):
         clicked = False
         attempt = 0
+        by, value = locator
         while attempt < 50 and not clicked:
             try:
-                by, value = locator
                 self.browser.find_element(by, value).click()
                 clicked = True
             except selenium.common.exceptions.StaleElementReferenceException:
-                pass
+                attempt += 1
         if not clicked:
-            self.logger.debug('retry_click not working at value: {}'.format(str(value)))
+            self.logger.critical('retry_click not working at value: {}'.format(str(value)))
             raise Exception('StaleElementReferenceException occurred and even 50 clicks didnt fix it')
 
     def refresh(self):
@@ -34,4 +35,11 @@ class BasePage:
 
     def get_text(self, locator):
         by, value = locator
-        return self.browser.find_element(by, value).text
+        attempt = 0
+        while attempt < 50:
+            try:
+                return self.browser.find_element(by, value).text
+            except selenium.common.exceptions.StaleElementReferenceException:
+                attempt += 1
+        self.logger.critical('Couldnt get text of element {} {} because of StaleElementException')
+        raise Exception('StaleElementReferenceException occured in get text')

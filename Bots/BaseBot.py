@@ -3,6 +3,7 @@ from Pages.GamePage import GamePage
 from Pages.BasePage import BasePage
 from enemies.Enemy import Enemy
 from math import floor
+from math import ceil
 import logging
 import csv
 import os
@@ -28,13 +29,13 @@ class BaseBot:
                 enemies_reader = csv.reader(csvfile)
                 next(enemies_reader)
                 for row in enemies_reader:
-                    enemies[row[0]] = Enemy(row[0], row[1], row[2], row[3], row[4])
+                    enemies[row[0]] = Enemy(row[0], ceil(float(row[1])), int(row[2]), int(row[3]), int(row[4]))
         # row[0], row[1], row[2], row[3], row[4] = id, next_attack_time, am_attacks, sum_prizes, last_attack_prize
         return enemies
 
     def save_enemies(self):
         enemies = self.enemies.values()
-        enemies = [[x.id, x.next_attack_time, x.am_attacks, x.sum_prizes, x.last_attack_prize] for x in enemies]
+        enemies = [[x.id, ceil(x.next_attack_time), x.am_attacks, x.sum_prizes, x.last_attack_prize] for x in enemies]
         file_path = 'enemies/' + self.user.profile_name + '-enemies.csv'
         with open(file_path, 'w+', newline='') as csvfile:
             enemies_writer = csv.writer(csvfile)

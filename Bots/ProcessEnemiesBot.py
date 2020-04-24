@@ -58,7 +58,7 @@ class ProcessEnemiesBot(BaseBot):
     def should_add_to_enemies(self, enemy_id):
         enemy_page = EnemyPage(self.browser, self.user, enemy_id)
         enemy_page.go_to()
-        return self.should_attack()
+        return self.should_attack(enemy_page)
 
     def add_to_enemies(self, enemy_id):
         self.enemies[enemy_id] = Enemy(enemy_id)

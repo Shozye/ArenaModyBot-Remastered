@@ -12,8 +12,9 @@ class Constant:
             # BasePage
             # ChallengePage
             self.enemy_clothes = (By.CSS_SELECTOR, 'div.rightLadyContent div div img')
-            self.challenge_button = (By.ID, 'challengeLady')
+            self.challenge_button_second = (By.ID, 'challengeLady')
             # EnemyPage
+            self.challenge_button_first = (By.CLASS_NAME, 'chalange')
             self.overview = (By.CLASS_NAME, 'overview')
             self.club_name = (By.CLASS_NAME, 'div.user-guild div.rightRow a')
             self.enemy_level = (By.CLASS_NAME, 'level')
@@ -23,6 +24,7 @@ class Constant:
             self.enemy_beauty = (By.CSS_SELECTOR, 'div.beauty div.value')
             self.enemy_generosity = (By.CSS_SELECTOR, 'div.generosity div.value')
             self.enemy_loyalty = (By.CSS_SELECTOR, 'div.loyalty div.value')
+            self.booster_indicator = (By.CSS_SELECTOR, '#stats > span')
             # GamePage
             self.chat_button = (By.ID, 'js-chat-toggle-button')
             self.photo_session_timer = (By.ID, 'activity-timer')

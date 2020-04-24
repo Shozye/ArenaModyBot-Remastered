@@ -12,18 +12,19 @@ class RankPage(GamePage):
     def change_to_exp_page(self, page_num):
         script = self.Script.change_rank_exp_begin + str(page_num) + self.Script.change_rank_end
         self.browser.execute_script(script)
-        self.logger('Changed to experience page {}'.format(page_num))
+        self.logger.debug('Changed to experience page {}'.format(page_num))
 
     def change_to_won_duels_page(self, page_num):
         script = self.Script.change_rank_won_duels_begin + str(page_num) + self.Script.change_rank_end
         self.browser.execute_script(script)
-        self.logger('Changed to won duels page {}'.format(page_num))
+        self.logger.debug('Changed to won duels page {}'.format(page_num))
 
     def change_to_won_dollars_page(self, page_num):
         script = self.Script.change_rank_won_dollars_begin + str(page_num) + self.Script.change_rank_end
         self.browser.execute_script(script)
-        self.logger('Changed to won dollars page {}'.format(page_num))
+        self.logger.debug('Changed to won dollars page {}'.format(page_num))
 
+    # noinspection PyUnboundLocalVariable,SpellCheckingInspection
     def gather_ids_from_page(self):
         by, value = self.Locator.player_name
         attempt = 0
