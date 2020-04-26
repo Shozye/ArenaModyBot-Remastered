@@ -8,6 +8,16 @@ class GamePage(BasePage):
     def __init__(self, browser, user):
         super().__init__(browser, user)
 
+    def turn_off_cookies_notification(self):
+        try:
+            WebDriverWait(self.browser, 5).until(
+                EC.visibility_of_element_located(self.Locator.cookies_button)
+            )
+            self.retry_click(self.Locator.cookies_button)
+        except selenium.common.exceptions.TimeoutException:
+            self.logger.debug('Cookies notification didn\'t show up')
+            pass
+
     def is_at(self):
         try:
             WebDriverWait(self.browser, 10).until(EC.element_to_be_clickable(self.Locator.chat_button))
@@ -32,11 +42,10 @@ class GamePage(BasePage):
     def show_my_stats(self):
         self.retry_click(self.Locator.popularity_button)
         WebDriverWait(self.browser, 5).until(
-            EC.visibility_of_element_located(self.Locator.my_loyalty)
+            EC.visibility_of_element_located(self.Locator.my_style)
         )
 
     def my_stats(self):
-        # debug
         stats = {'style': int(self.get_text(self.Locator.my_style)),
                  'generosity': int(self.get_text(self.Locator.my_generosity)),
                  'creativity': int(self.get_text(self.Locator.my_creativity)),

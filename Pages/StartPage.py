@@ -8,15 +8,6 @@ class StartPage(BasePage):
     def __init__(self, browser, user):
         super().__init__(browser, user)
 
-    def turn_off_cookies_notification(self):
-        try:
-            WebDriverWait(self.browser, 5).until(
-                EC.visibility_of_element_located(self.Locator.cookies_button)
-            )
-            self.retry_click(self.Locator.cookies_button)
-        except selenium.common.exceptions.TimeoutException:
-            pass
-
     def go_to(self):
         self.browser.get(self.Url.start_page)
         self.logger.debug('Browser is at start page')

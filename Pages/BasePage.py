@@ -4,8 +4,11 @@ import logging
 
 
 class BasePage:
+    """
+    Base Object to interact with web elements
+    """
     def __init__(self, browser, user):
-        self.browser = browser  # type: selenium.webdriver.chrome.webdriver.WebDriver
+        self.browser = browser
         self.user = user
         self.logger = logging.getLogger('main')
 
@@ -17,6 +20,10 @@ class BasePage:
         self.browser.quit()
 
     def retry_click(self, locator):
+        """
+        Clicking with this method prevents from StaleElementReferenceException
+        :param locator: (BY, value)
+        """
         clicked = False
         attempt = 0
         by, value = locator
@@ -28,12 +35,17 @@ class BasePage:
                 attempt += 1
         if not clicked:
             self.logger.critical('retry_click not working at value: {}'.format(str(value)))
-            raise Exception('StaleElementReferenceException occurred and even 50 clicks didnt fix it')
+            raise Exception('StaleElementReferenceException occurred and even 50 clicks didn\'t fix it')
 
     def refresh(self):
         self.browser.refresh()
 
     def get_text(self, locator):
+        """
+        Method used to get text from webelement
+        Prevents from StaleElementReferenceException
+        :param locator: (By, value)
+        """
         by, value = locator
         attempt = 0
         while attempt < 50:
@@ -42,4 +54,4 @@ class BasePage:
             except selenium.common.exceptions.StaleElementReferenceException:
                 attempt += 1
         self.logger.critical('Couldnt get text of element {} {} because of StaleElementException')
-        raise Exception('StaleElementReferenceException occured in get text')
+        raise Exception('StaleElementReferenceException occurred in get text')

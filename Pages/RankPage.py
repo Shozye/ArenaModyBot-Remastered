@@ -24,7 +24,6 @@ class RankPage(GamePage):
         self.browser.execute_script(script)
         self.logger.debug('Changed to won dollars page {}'.format(page_num))
 
-    # noinspection PyUnboundLocalVariable,SpellCheckingInspection
     def gather_ids_from_page(self):
         by, value = self.Locator.player_name
         attempt = 0

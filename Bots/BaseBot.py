@@ -34,7 +34,8 @@ class BaseBot:
         return enemies
 
     def save_enemies(self):
-        enemies = self.enemies.values()
+        enemies = list(self.enemies.values())
+        enemies.sort(key=lambda x: x.worth(), reverse=True)
         enemies = [[x.id, ceil(x.next_attack_time), x.am_attacks, x.sum_prizes, x.last_attack_prize] for x in enemies]
         file_path = 'enemies/' + self.user.profile_name + '-enemies.csv'
         with open(file_path, 'w+', newline='') as csvfile:
@@ -49,7 +50,9 @@ class BaseBot:
         start_page.type_username()
         start_page.type_password()
         start_page.submit_login()
-        start_page.refresh()
+        game_page = GamePage(self.browser, self.user)
+        game_page.refresh()
+        game_page.turn_off_cookies_notification()
 
     def is_in_game(self):
         game_page = GamePage(self.browser, self.user)
@@ -81,6 +84,7 @@ class BaseBot:
         self.level = game_page.my_level()
 
     def update_status(self):
+        self.refresh()
         self.update_money()
         self.update_emeralds()
         self.update_energy()
@@ -109,10 +113,11 @@ class BaseBot:
             return False
 
     def should_attack(self, enemy_page):
-        if enemy_page.enemy_club() == self.user.my_club and self.user.my_club is not None or \
-                not self.level - self.user.attack_enemies_with_level_max_lower_by <= enemy_page.enemy_level() <= \
-                    self.level + self.user.attack_enemies_with_level_max_higher_by or \
-                not self.better_than_enemy(enemy_page.enemy_stats(), enemy_page.has_boosters()):
+        if enemy_page.enemy_club() == self.user.my_club and self.user.my_club is not None:
             return False
-        else:
+        enemy_level_range = range(self.user.enemy_level[0] + self.level, self.user.enemy_level[1] + self.level + 1)
+        if enemy_page.enemy_level() in enemy_level_range and \
+                self.better_than_enemy(enemy_page.enemy_stats(), enemy_page.has_boosters()):
             return True
+        else:
+            return False
