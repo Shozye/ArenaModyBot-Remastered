@@ -73,6 +73,7 @@ class EnemyPage(GamePage):
         self.browser.implicitly_wait(0)
         by, value = self.Locator.booster_indicator
         if len(self.browser.find_elements(by, value)) == 0:
+            self.browser.implicitly_wait(0.5)
             return False
-        return True
         self.browser.implicitly_wait(0.5)
+        return True

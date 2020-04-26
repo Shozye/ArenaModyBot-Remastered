@@ -21,7 +21,7 @@ class Constant:
             # EnemyPage
             self.challenge_button_first = (By.CLASS_NAME, 'chalange')
             self.overview = (By.CLASS_NAME, 'overview')
-            self.club_name = (By.CLASS_NAME, 'div.user-guild div.rightRow a')
+            self.club_name = (By.CSS_SELECTOR, 'div.user-guild div.rightRow a')
             self.enemy_level = (By.CLASS_NAME, 'level')
             self.enemy_style = (By.CSS_SELECTOR, 'div.style div.value')
             self.enemy_creativity = (By.CSS_SELECTOR, 'div.creativity div.value')
