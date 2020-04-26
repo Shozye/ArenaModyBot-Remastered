@@ -47,3 +47,4 @@ class UserConfig:
         # or if he has got better stats than your character
         self.delay_to_enemy_that_shouldnt_be_attacked = 60 * 60 * 24  # 1 day
         self.delay_after_no_challenge_button = 144000  # 40 hours
+        self.user.worthy_lady_dollar_threshold = 4500

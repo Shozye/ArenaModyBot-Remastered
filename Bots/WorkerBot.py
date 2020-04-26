@@ -2,6 +2,7 @@ from Bots.BaseBot import BaseBot
 from Pages.GamePage import GamePage
 from Pages.WorkPage import WorkPage
 from Pages.EnemyPage import EnemyPage
+import logging
 import time
 
 
@@ -36,6 +37,9 @@ class WorkerBot(BaseBot):
                     self.total += prize
                     self.logger.info('Money acquired from {} is {}. It\'s {} total'.format(enemy_id, prize, self.total))
                     self.enemies[enemy_id].update_after_fight(prize)
+                    if prize > self.user.worthy_lady_dollar_threshold:
+                        worthy_lady_logger = logging.getLogger('worthy people')
+                        worthy_lady_logger.info('{} gave {} dollars'.format(enemy_id, prize))
             else:
                 self.enemies[enemy_id].update_after_no_challenge_button()
             self.save_enemies()
