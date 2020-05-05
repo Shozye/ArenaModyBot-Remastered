@@ -2,6 +2,7 @@ from Pages.GamePage import GamePage
 from Pages.ChallengePage import ChallengePage
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import string
 import selenium
 
 
@@ -20,6 +21,7 @@ class EnemyPage(GamePage):
         by, value = self.Locator.club_name
         try:
             club_name = self.browser.find_element(by, value).text
+            club_name = "".join(filter(lambda x: x in set(string.printable), club_name))  # remove non printable chars
             self.logger.debug('Enemy club was {}'.format(club_name))
         except selenium.common.exceptions.NoSuchElementException:
             club_name = None

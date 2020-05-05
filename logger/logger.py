@@ -37,7 +37,7 @@ def config_logging():
     logger.addHandler(fh1)
     logger.addHandler(fh2)
 
-    sub_logger = logging.getLogger('worthy people')
+    sub_logger = logging.getLogger('w_ladies')
     sub_logger.setLevel(logging.INFO)
 
     form2 = logging.Formatter('%(asctime)s|%(message)s')

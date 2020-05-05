@@ -9,11 +9,11 @@ class UserConfig:
         self.enemy_level = (-5, -1)  # Attack enemies in this interval regarding to your level inclusive both
         # Left number of enemy_level should be lower than right
         self.experience_begin = 1  # inclusive
-        self.experience_end = 30  # inclusive
-        self.won_dollars_begin = 30  # inclusive
+        self.experience_end = 50  # inclusive
+        self.won_dollars_begin = 20  # inclusive
         self.won_dollars_end = 50  # inclusive
-        self.won_duels_begin = 1  # inclusive
-        self.won_duels_end = 0  # inclusive
+        self.won_duels_begin = 20  # inclusive
+        self.won_duels_end = 50  # inclusive
         # before comparing stats with enemy, multiply your own stats by stat_multi
         # goal is to prevent losing
         self.stat_multi = 0.95  # Your stats are going to be multiplied by this to prevent random losing
@@ -47,4 +47,4 @@ class UserConfig:
         # or if he has got better stats than your character
         self.delay_to_enemy_that_shouldnt_be_attacked = 60 * 60 * 24  # 1 day
         self.delay_after_no_challenge_button = 144000  # 40 hours
-        self.user.worthy_lady_dollar_threshold = 4500
+        self.worthy_lady_dollar_threshold = 500
