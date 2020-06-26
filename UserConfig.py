@@ -3,7 +3,7 @@ class UserConfig:
         self.profile_name = 'sample_profile'
         self.username = 'sample-username'
         self.password = 'sample-password'
-        self.driver_path = None  # if None, then in the same file with Controller
+        self.driver_path = None # if None, then in the same file with Controller !SPECIFY IF ON LINUX!
         self.my_club = None  # should be string
         self.no_touch_girls = []  # type ids of characters that you don't want to attack ever
         self.enemy_level = (-5, -1)  # Attack enemies in this interval regarding to your level inclusive both
