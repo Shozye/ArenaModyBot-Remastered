@@ -103,3 +103,29 @@ class Controller:
         self.logger.debug('debug test')
         self.logger.error('error test')
         self.logger.critical('critical test')
+
+    def recheck_checked_enemies(self):
+        bot = ProcessEnemiesBot(self.browser, self.user)
+        bot.login()
+        bot.update_status()
+        bot.get_stats()
+        for index in range(len(bot.checked_enemies)):
+            enemy_id = bot.checked_enemies[index]
+            if bot.should_add_to_enemies(enemy_id) and enemy_id not in list(bot.enemies.keys()):
+                bot.add_to_enemies(enemy_id)
+                self.logger.info(enemy_id + " added to enemies")
+
+    def recheck_enemies(self):
+        bot = ProcessEnemiesBot(self.browser, self.user)
+        bot.login()
+        bot.update_status()
+        bot.get_stats()
+        to_del = []
+        for enemy_id in list(bot.enemies.keys()):
+            if not bot.should_add_to_enemies(enemy_id):
+                to_del.append(enemy_id)
+
+        for enemy_id in to_del:
+            del bot.enemies[enemy_id]
+            self.logger.info(enemy_id + " deleted.")
+        bot.save_enemies()
