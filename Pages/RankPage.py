@@ -3,6 +3,8 @@ import selenium
 
 
 class RankPage(GamePage):
+    """Page Object to navigate through ranking
+    """
     def __init__(self, browser, user):
         super().__init__(browser, user)
 

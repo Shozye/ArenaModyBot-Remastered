@@ -5,6 +5,8 @@ import selenium
 
 
 class StartPage(BasePage):
+    """Page Object to navigate through login screen.
+    """
     def __init__(self, browser, user):
         super().__init__(browser, user)
 

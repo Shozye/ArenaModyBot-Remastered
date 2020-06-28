@@ -5,6 +5,8 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 class GamePage(BasePage):
+    """ Page Object to operate navigation bar
+    """
     def __init__(self, browser, user):
         super().__init__(browser, user)
 
@@ -40,12 +42,17 @@ class GamePage(BasePage):
         return int(self.get_text(self.Locator.emeralds).replace(',', ''))
 
     def show_my_stats(self):
+        """Clicks the button that show stats.
+        It is necessary to use this method before trying to get stats
+        """
         self.retry_click(self.Locator.popularity_button)
         WebDriverWait(self.browser, 5).until(
             EC.visibility_of_element_located(self.Locator.my_style)
         )
 
     def my_stats(self):
+        """returns dictionary with stats
+        """
         stats = {'style': int(self.get_text(self.Locator.my_style)),
                  'generosity': int(self.get_text(self.Locator.my_generosity)),
                  'creativity': int(self.get_text(self.Locator.my_creativity)),

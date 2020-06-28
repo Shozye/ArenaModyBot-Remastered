@@ -7,16 +7,22 @@ import selenium
 
 
 class EnemyPage(GamePage):
+    """Page Object to interact with Challenge Page
+    """
     def __init__(self, browser, user, _id):
         super().__init__(browser, user)
         self.id = _id
         self.enemy_url = self.Url.base_profile + _id
 
     def go_to(self):
+        """Goes to url of enemy profile
+        """
         self.browser.get(self.enemy_url)
         self.logger.debug('Entered {}'.format(self.enemy_url))
 
     def enemy_club(self):
+        """Returns enemy club name
+        """
         WebDriverWait(self.browser, 5).until(EC.visibility_of_element_located(self.Locator.overview))
         by, value = self.Locator.club_name
         try:
@@ -50,6 +56,8 @@ class EnemyPage(GamePage):
         return int(self.get_text(self.Locator.enemy_loyalty))
 
     def enemy_stats(self):
+        """Returns dictionary with keys and values of enemy stats
+        """
         stats = {
             "style": self.enemy_style(),
             "devotion": self.enemy_devotion(),
@@ -72,6 +80,8 @@ class EnemyPage(GamePage):
         return ChallengePage(self.browser, self.user)
 
     def has_boosters(self):
+        """ :return: boolean
+        """
         self.browser.implicitly_wait(0)
         by, value = self.Locator.booster_indicator
         if len(self.browser.find_elements(by, value)) == 0:

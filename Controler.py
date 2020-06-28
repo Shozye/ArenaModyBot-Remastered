@@ -105,6 +105,11 @@ class Controller:
         self.logger.critical('critical test')
 
     def recheck_checked_enemies(self):
+        """
+        Bot will check every character from checked_enemies list and delete them if they do not meet requirements
+        It should happen after certain events, after getting new level or after seeing that lot of checked enemies
+        raised their level and that's why find_enemies cant find them
+        """
         bot = ProcessEnemiesBot(self.browser, self.user)
         bot.login()
         bot.update_status()
@@ -116,6 +121,11 @@ class Controller:
                 self.logger.info(enemy_id + " added to enemies")
 
     def recheck_enemies(self):
+        """
+        Bot will check every character from checked_enemies list and delete them if they do not meet requirements
+        It should happen after certain events, after getting new level or after seeing that lot of checked enemies
+        raised their level and that's why find_enemies cant find them
+        """
         bot = ProcessEnemiesBot(self.browser, self.user)
         bot.login()
         bot.update_status()

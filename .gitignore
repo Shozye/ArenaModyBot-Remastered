@@ -6,4 +6,4 @@ venv
 addonSelenium.py
 UserConfig.py
 chromedriver
-chromedriver
+chromedriver.exe

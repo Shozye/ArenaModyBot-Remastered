@@ -5,6 +5,8 @@ import selenium
 
 
 class WorkPage(GamePage):
+    """Page Object to navigate through work page.
+    """
     def __init__(self, browser, user):
         super().__init__(browser, user)
 
@@ -23,9 +25,6 @@ class WorkPage(GamePage):
     def close_photo_session_popup(self):
         self.browser.execute_script(self.Script.close_popup)
         self.logger.debug('Photo session closed popup')
-
-    def open_inventory(self):
-        self.browser.execute_script(self.Script.open_inventory)
 
     def wait_until_photo_session_to_end(self):
         try:

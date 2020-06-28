@@ -6,10 +6,10 @@ def main():
     user = UserConfig()
     control_panel = Controller(user)
     '''
-    Use methods below
+    Uncomment one of the methods below to use it
     '''
 
-    control_panel.find_enemies()
+    # control_panel.find_enemies()
     # control_panel.gather_emeralds()
     # control_panel.gather_emeralds_and_fight()
     # control_panel.fight()

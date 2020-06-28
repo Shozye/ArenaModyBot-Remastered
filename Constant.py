@@ -2,9 +2,7 @@ from selenium.webdriver.common.by import By
 
 
 class Constant:
-    """
-    That Class is used to easier introduce changes to code,
-    if selectors of web elements change
+    """That Class is used to easier introduce changes to code
     It also helps in readability of code.
     """
     def __init__(self):

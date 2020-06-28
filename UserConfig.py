@@ -1,4 +1,6 @@
 class UserConfig:
+    """Change values according to your preferences
+    """
     def __init__(self):
         self.profile_name = 'sample-profile'
         self.username = 'sample-username'

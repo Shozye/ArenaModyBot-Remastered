@@ -13,6 +13,8 @@ class WorkerBot(BaseBot):
         self.total = 0
 
     def during_any_photo_session_activity(self):
+        """Bot checks top navigation bar if there is photo session indicator and returns information
+        """
         game_page = GamePage(self.browser, self.user)
         if game_page.is_during_photo_session() or game_page.is_photo_session_to_end():
             self.logger.debug('Bot is during photo session activity')
@@ -22,6 +24,9 @@ class WorkerBot(BaseBot):
             return False
 
     def attack(self, enemy_id):
+        """Method executing attack on enemy character
+        :param enemy_id: string
+        """
         enemy_page = EnemyPage(self.browser, self.user, enemy_id)
         enemy_page.go_to()
         money_before = self.money
@@ -48,6 +53,9 @@ class WorkerBot(BaseBot):
             self.logger.debug('Enemy {} shouldn\'t be attacked, skipping.'.format(enemy_id))
 
     def choose_enemy(self):
+        """ Method that chooses enemy to attack considering expected profit and if he is viable to attack
+        :return: character which has got most expected profit after attack
+        """
         values = list(self.enemies.values())
         values.sort(key=lambda x: x.worth(), reverse=True)
         for enemy in values:
@@ -58,6 +66,8 @@ class WorkerBot(BaseBot):
         pass
 
     def make_emerald_action(self):
+        """Method that starts photosession, waits till photo session ends and ends it if it is possible.
+        """
         work_page = WorkPage(self.browser, self.user)
         work_page.go_to()
         if work_page.is_during_photo_session():
