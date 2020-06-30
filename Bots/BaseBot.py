@@ -22,6 +22,9 @@ class BaseBot:
         self.logger = logging.getLogger('main')
 
     def initialize_enemies(self):
+        """This method takes information from enemies.csv and creates dictionary with information where key = ID
+        :return: dictionary containing information about enemy characters.
+        """
         enemies = dict()
         file_path = 'enemies/' + self.user.profile_name + '-enemies.csv'
         if os.path.isfile(file_path):
@@ -34,6 +37,8 @@ class BaseBot:
         return enemies
 
     def save_enemies(self):
+        """This function saves information about enemies to enemies.csv
+        """
         enemies = list(self.enemies.values())
         enemies.sort(key=lambda x: x.worth(), reverse=True)
         enemies = [[x.id, ceil(x.next_attack_time), x.am_attacks, x.sum_prizes, x.last_attack_prize] for x in enemies]
@@ -44,6 +49,8 @@ class BaseBot:
             enemies_writer.writerows(enemies)
 
     def login(self):
+        """If WebDriver is not logged in, bot will log in to arenamody.pl with login/password from UserConfig.py
+        """
         start_page = StartPage(self.browser, self.user)
         start_page.go_to()
         start_page.open_login_form()
@@ -55,6 +62,9 @@ class BaseBot:
         game_page.turn_off_cookies_notification()
 
     def is_in_game(self):
+        """
+        :return: True if Web driver is at logged in and at site arenamody.pl
+        """
         game_page = GamePage(self.browser, self.user)
         return game_page.is_at()
 
@@ -63,6 +73,9 @@ class BaseBot:
         base_page.refresh()
 
     def get_stats(self):
+        """Sets stats attribute to dictionary with keys=stat_name
+        Web driver has to click popularity button to be able to acquire information.
+        """
         game_page = GamePage(self.browser, self.user)
         game_page.show_my_stats()
         self.stats = game_page.my_stats()
@@ -84,6 +97,8 @@ class BaseBot:
         self.level = game_page.my_level()
 
     def update_status(self):
+        """Updates money, emeralds, energy, level and put them into bot attributes.
+        """
         self.refresh()
         self.update_money()
         self.update_emeralds()
@@ -97,6 +112,11 @@ class BaseBot:
         self.browser.quit()
 
     def better_than_enemy(self, enemy_stats, has_booster):
+        """ Method that compares enemy stats to mine with uncertainty specified in UserConfig.py
+        :param enemy_stats: dictionary with keys=stat_name, where values are enemy_stats
+        :param has_booster: True if enemy uses any popularity booster, False otherwise
+        :return: True if amount of better stats is bigger than value specified in UserConfig.py, False otherwise
+        """
         multi = self.user.multi_booster if has_booster else 1
         style_better = floor(self.user.stat_multi * self.stats['style']) > enemy_stats['style'] * multi
         creativ_better = floor(self.user.stat_multi * self.stats['creativity']) > enemy_stats['creativity'] * multi
@@ -113,6 +133,10 @@ class BaseBot:
             return False
 
     def should_attack(self, enemy_page):
+        """ Character should attack enemy if enemy meets level and club criteria specified in UserConfig.py
+        :param enemy_page: EnemyPage page object
+        :return: True if should attack else False
+        """
         if enemy_page.enemy_club() == self.user.my_club and self.user.my_club is not None:
             return False
         enemy_level_range = range(self.user.enemy_level[0] + self.level, self.user.enemy_level[1] + self.level + 1)
