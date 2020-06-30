@@ -27,7 +27,9 @@ NOTE: To fight, you have to first use **find_enemies()** method
   # Description of fighting
   Note: To use fighting, you have to use **fight_enemies()** method first.
   
-  enemies.csv file after using **find_enemies()**:![enemies.csv file after using **find_enemies**](https://i.imgur.com/vsmb7RX.png)
+  enemies.csv file after using **find_enemies()**:
+  
+  ![enemies.csv file after using **find_enemies**](https://i.imgur.com/vsmb7RX.png)
   
   Values are gonna get updated after every attack.
  1. Bot will choose enemies only between those where next_attack_time is lesser than time since epoch in seconds.
