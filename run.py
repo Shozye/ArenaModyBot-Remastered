@@ -17,5 +17,6 @@ def main():
     # control_panel.recheck_checked_enemies()
     # control_panel.recheck_enemies()
 
+
 if __name__ == '__main__':
     main()

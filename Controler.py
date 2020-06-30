@@ -1,6 +1,5 @@
 import os
 from selenium import webdriver
-from Bots.BaseBot import BaseBot
 from Bots.ProcessEnemiesBot import ProcessEnemiesBot
 from Bots.WorkerBot import WorkerBot
 from logger.logger import config_logging
@@ -13,6 +12,7 @@ class Controller:
     Names of the methods should clearly state what actions bot is going to take
     They should be run at run.py
     """
+
     def __init__(self, user):
         config_logging()
         self.user = user

@@ -79,7 +79,7 @@ class WorkerBot(BaseBot):
             self.refresh()
             change = work_page.my_emeralds() - self.emeralds
             self.gathered_emeralds += change
-            self.logger.info('Amount of gathered emeralds {}. Thats {} in total'.format(change, self.gathered_emeralds))
+            self.logger.info('Amount of gathered emeralds {}. That\'s {} in total'.format(change, self.gathered_emeralds))
         else:
             work_page.start_photo_session()
             self.refresh()

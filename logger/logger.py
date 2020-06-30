@@ -5,10 +5,10 @@ import time
 
 
 def config_logging():
-    '''
+    """
     This function should be used only once during initialization of the bot
-    It configurates logging.
-    '''
+    It configures logging.
+    """
     if not os.path.isdir(os.path.join(os.getcwd(), 'logs')):
         os.mkdir('logs')
     if not os.path.isdir(os.path.join(os.getcwd(), 'logs', 'DEBUG')):

@@ -17,8 +17,8 @@ class ProcessEnemiesBot(BaseBot):
     def initialize_checked_enemies(self):
         checked_enemies = list()
         if os.path.isfile(self.checked_enemies_file_path):
-            with open(self.checked_enemies_file_path, 'r') as csvfile:
-                checked_enemies_reader = csv.reader(csvfile)
+            with open(self.checked_enemies_file_path, 'r') as csv_file:
+                checked_enemies_reader = csv.reader(csv_file)
                 next(checked_enemies_reader)  # omitting header
                 for row in checked_enemies_reader:
                     # row[0] is enemy id
@@ -26,8 +26,8 @@ class ProcessEnemiesBot(BaseBot):
         return checked_enemies
 
     def save_checked_enemies(self):
-        with open(self.checked_enemies_file_path, 'w+', newline='') as csvfile:
-            checked_enemies_writer = csv.writer(csvfile)
+        with open(self.checked_enemies_file_path, 'w+', newline='') as csv_file:
+            checked_enemies_writer = csv.writer(csv_file)
             checked_enemies_writer.writerow(['Enemy ID'])
             for enemy_id in self.checked_enemies:
                 checked_enemies_writer.writerow([enemy_id])  # because enemy_id is a string

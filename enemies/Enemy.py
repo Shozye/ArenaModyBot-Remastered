@@ -17,18 +17,18 @@ class Enemy:
         self.user = UserConfig()
 
     def mean_and_last_attack(self):
-        '''
+        """
         :return: integer, expected value of money to get from enemy
-        '''
+        """
         return ((self.sum_prizes / self.am_attacks) + self.last_attack_prize) / 2
 
     def worth(self):
-        '''
+        """
         This method adds an artificial expected value to real expected value
         Artificial expected value is needed to encourage bot to attack this character
         This method should be used for sorting enemies
         :return: integer
-        '''
+        """
         if self.am_attacks == 0:
             return self.user.worth_of_first_attack
         worth = self.mean_and_last_attack()
@@ -45,9 +45,12 @@ class Enemy:
         self.next_attack_time = time.time() + self.user.delay_after_no_challenge_button
 
     def update_after_fight(self, prize):
-        '''
+        """
+        Method that updates all attributes of Enemy class.
+        next_attack_time is changed due to amount of prize to
+        give enemies time to gather money once again
         :param prize: integer, money acquired from enemy
-        '''
+        """
         self.am_attacks += 1
         self.sum_prizes += prize
         self.last_attack_prize = prize

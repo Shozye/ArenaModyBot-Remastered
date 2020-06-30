@@ -42,7 +42,7 @@ class BasePage:
 
     def get_text(self, locator):
         """
-        Method used to get text from webelement
+        Method used to get text from Web Element
         Prevents from StaleElementReferenceException
         :param locator: (By, value)
         """
@@ -53,5 +53,5 @@ class BasePage:
                 return self.browser.find_element(by, value).text
             except selenium.common.exceptions.StaleElementReferenceException:
                 attempt += 1
-        self.logger.critical('Couldnt get text of element {} {} because of StaleElementException')
+        self.logger.critical('Couldn\'t get text of element {} {} because of StaleElementException')
         raise Exception('StaleElementReferenceException occurred in get text')

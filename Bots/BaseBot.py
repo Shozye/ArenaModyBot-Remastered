@@ -25,8 +25,8 @@ class BaseBot:
         enemies = dict()
         file_path = 'enemies/' + self.user.profile_name + '-enemies.csv'
         if os.path.isfile(file_path):
-            with open(file_path, 'r') as csvfile:
-                enemies_reader = csv.reader(csvfile)
+            with open(file_path, 'r') as csv_file:
+                enemies_reader = csv.reader(csv_file)
                 next(enemies_reader)
                 for row in enemies_reader:
                     enemies[row[0]] = Enemy(row[0], ceil(float(row[1])), int(row[2]), int(row[3]), int(row[4]))
@@ -38,8 +38,8 @@ class BaseBot:
         enemies.sort(key=lambda x: x.worth(), reverse=True)
         enemies = [[x.id, ceil(x.next_attack_time), x.am_attacks, x.sum_prizes, x.last_attack_prize] for x in enemies]
         file_path = 'enemies/' + self.user.profile_name + '-enemies.csv'
-        with open(file_path, 'w+', newline='') as csvfile:
-            enemies_writer = csv.writer(csvfile)
+        with open(file_path, 'w+', newline='') as csv_file:
+            enemies_writer = csv.writer(csv_file)
             enemies_writer.writerow(["ID", "next_attack_time", "am_attacks", "sum_prizes", "last_attack_prize"])
             enemies_writer.writerows(enemies)
 
@@ -89,7 +89,7 @@ class BaseBot:
         self.update_emeralds()
         self.update_energy()
         self.update_level()
-        self.logger.debug('Succesfully updated status')
+        self.logger.debug('Successfully updated status')
         self.logger.debug('money {}, emeralds {}, energy {}, level {}'.format(self.money, self.emeralds,
                                                                               self.energy, self.level))
 
